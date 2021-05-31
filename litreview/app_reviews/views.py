@@ -1,8 +1,29 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+
+from .forms import CreateTicketForm
+from .models import Ticket
 
 # Create your views here.
 def ticket_create(request):
-    return render(request, 'createticket.html')
+
+    if request.method == 'POST':
+        form = CreateTicketForm(request.POST, request.FILES)
+        if form.is_valid:
+            Ticket.objects.create(
+                headline= request.POST['headline'],
+                body= request.POST['body'],
+                user= request.user,
+                image= request.FILES.get('image', 'image/upload/NULL.jpg')
+            )
+
+            return redirect('flux')
+    else:
+        form = CreateTicketForm()
+
+    return render(request, 'createticket.html', {'form': form})
+
+
+
 
 def ticket_modify(request):
     return render(request, 'modifyticket.html')
