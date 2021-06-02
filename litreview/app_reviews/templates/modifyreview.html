@@ -1,1 +1,11 @@
 <h1>Modify review</h1>
+
+<p>BLOCK TICKET</p>
+
+<p>Modification de la critique #{{ review_infos.id }} {{ review_infos.title }}</p>
+
+
+<form method="POST" class="post-form" enctype="multipart/form-data">{% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="save btn btn-default">Envoyer</button>
+</form>

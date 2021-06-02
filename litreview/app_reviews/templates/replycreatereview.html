@@ -1,7 +1,9 @@
-<h1>Create review</h1>
+<h2>Critique réponse</h2>
+
+<p>Réponse au ticket #{{ infos_ticket.id }} {{ infos_ticket.title }}</p>
+
 
 <form method="POST" class="post-form" enctype="multipart/form-data">{% csrf_token %}
-    {{ form_ticket.as_p }}
     {{ form_review.as_p }}
     <button type="submit" class="save btn btn-default">Envoyer</button>
 </form>

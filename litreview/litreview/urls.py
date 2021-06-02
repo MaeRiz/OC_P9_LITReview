@@ -20,7 +20,7 @@ from django.urls import include, path
 from . import views
 from app_accounts import views as v_acc
 from app_reviews import views as v_rev
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,12 +28,14 @@ urlpatterns = [
     path('login/', LoginView.as_view(template_name='login.html', redirect_authenticated_user = True), name='login'),
     path('register/', v_acc.register, name='register'),
     path('account/', v_acc.account, name='account'),
+    path('logout/', v_acc.disconnect, name='logout'),
 
     path('ticket/create/', v_rev.ticket_create, name='create_ticket'),
-    path('ticket/modify/', v_rev.ticket_modify, name='modify_ticket'),
+    path('ticket/modify/<int:id>', v_rev.ticket_modify, name='modify_ticket'),
     path('review/create/', v_rev.review_create, name='create_review'),
-    path('review/modify/', v_rev.review_modify, name='modify_review'),
-    path('flux/', v_rev.flux, name="flux"),
+    path('review/create/<int:id>', v_rev.review_create_reply),
+    path('review/modify/<int:id>', v_rev.review_modify, name='modify_review'),
+    path('', v_rev.feed, name="feed"),
 
 ]
 

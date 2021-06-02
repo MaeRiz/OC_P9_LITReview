@@ -40,8 +40,8 @@ INSTALLED_APPS = [
 
     'debug_toolbar',
 
-    'app_accounts',
-    'app_reviews'
+    'app_accounts.apps.AppAccountsConfig',
+    'app_reviews.apps.AppReviewsConfig'
 ]
 
 MIDDLEWARE = [
@@ -138,4 +138,4 @@ INTERNAL_IPS = [
     '127.0.0.1',
 ]
 
-LOGIN_REDIRECT_URL = 'flux'
+LOGIN_REDIRECT_URL = '/'
