@@ -1,18 +1,7 @@
 from django import forms
-from django.forms.widgets import Select
 
-from .models import Review, Ticket
 
 RATING_CHOISES = ['1', '2', '3', '4', '5']
-
-class CreateTicketForm(forms.ModelForm):
-    class Meta:
-        model = Ticket
-        fields = (
-            'title',
-            'content',
-            'image',
-        )
 
 class RawCreateTicketForm(forms.Form):
     title = forms.CharField(
@@ -24,10 +13,10 @@ class RawCreateTicketForm(forms.Form):
             },
         ),
     )
-    content = forms.CharField(
+    description = forms.CharField(
         required=True,
         label='Description',
-        widget=forms.TextInput(
+        widget=forms.Textarea(
             attrs={
                 "placeholder": "Description",
             },
@@ -37,16 +26,6 @@ class RawCreateTicketForm(forms.Form):
         required=True,
     )
     
-
-class CreateReviewForm(forms.ModelForm):
-    class Meta:
-        model = Review
-        fields = (
-            'headline',
-            'rating',
-            'body',
-        )
-
 
 class RawCreateReviewForm(forms.Form):
     CHOICES = (('1', '1'),('2', '2'),('3', '3'),('4', '4'),('5', '5'))
@@ -62,7 +41,7 @@ class RawCreateReviewForm(forms.Form):
     body = forms.CharField(
         required=True,
         label='Description',
-        widget=forms.TextInput(
+        widget=forms.Textarea(
             attrs={
                 "placeholder": "Description",
             },

@@ -11,7 +11,7 @@ def ticket_create(request):
         if form.is_valid:
             Ticket.objects.create(
                 title= request.POST['title'],
-                content= request.POST['content'],
+                description= request.POST['description'],
                 user= request.user,
                 image= request.FILES.get('image', 'image/upload/NULL.jpg')
             )
@@ -34,7 +34,7 @@ def ticket_modify(request, id):
         if form.is_valid:
             Ticket.objects.filter(pk=id).update(
                 title= request.POST['title'],
-                content= request.POST['content'],
+                description= request.POST['description'],
                 image= request.FILES.get('image', ticket_modify.image)
             )
             return redirect('/')
@@ -42,7 +42,7 @@ def ticket_modify(request, id):
         form = RawCreateTicketForm()
 
         form.fields['title'].initial = ticket_modify.title
-        form.fields['content'].initial = ticket_modify.content
+        form.fields['description'].initial = ticket_modify.description
         form.fields['image'].initial = ticket_modify.image
 
     context = {
@@ -61,7 +61,7 @@ def review_create(request):
         if form_review.is_valid and form_ticket.is_valid:
             new_ticket = Ticket.objects.create(
                 title= request.POST['title'],
-                content= request.POST['content'],
+                description= request.POST['description'],
                 user= request.user,
                 image= request.FILES.get('image', 'image/upload/NULL.jpg')
             )
@@ -150,5 +150,3 @@ def feed(request):
     ]
 
     return render(request, 'flux.html', {'tickets': tickets})
-
-
