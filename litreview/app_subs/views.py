@@ -4,6 +4,7 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.db import IntegrityError
+from django.core.exceptions import ObjectDoesNotExist
 
 def home(request):
 
@@ -13,16 +14,22 @@ def home(request):
         if request.method == 'POST':
             form = FollowUser(request.POST)
             if form.is_valid:
-                if request.user == User.objects.get(username=request.POST['followed_user']):
-                    messages.error(request, 'Vous ne pouvez pas vous ajouter vous même.')
-                else:
-                    try:
-                        UserFollows.objects.create(
-                            user = request.user,
-                            followed_user = User.objects.get(username=request.POST['followed_user']),
-                        )
-                    except IntegrityError:
-                        messages.error(request, 'Vous avez déjà ajouter cet utilisateur.')
+                
+                try:
+                    follow_user = User.objects.get(username=request.POST['followed_user'])
+
+                    if request.user == follow_user:
+                        messages.error(request, 'Vous ne pouvez pas vous ajouter vous même.')
+                    else:
+                        try:
+                            UserFollows.objects.create(
+                                user = request.user,
+                                followed_user = follow_user,
+                            )
+                        except IntegrityError:
+                            messages.error(request, 'Vous avez déjà ajouter cet utilisateur.')
+                except User.DoesNotExist:
+                    messages.error(request, "Cet utilisateur n'existe pas.")
 
         else:
             form = FollowUser()
