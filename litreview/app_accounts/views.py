@@ -22,8 +22,3 @@ def register(request):
 def disconnect(request):
     logout(request)
     return redirect('login')
-
-
-def account(request):
-    return render(request, 'account.html')
-    

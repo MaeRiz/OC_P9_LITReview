@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'debug_toolbar',
 
     'app_accounts.apps.AppAccountsConfig',
-    'app_reviews.apps.AppReviewsConfig'
+    'app_reviews.apps.AppReviewsConfig',
+    'app_subs.apps.AppSubsConfig',
 ]
 
 MIDDLEWARE = [
@@ -84,6 +85,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+        'OPTIONS': {
+            'timeout': 20,
+        }
     }
 }
 
