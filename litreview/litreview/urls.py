@@ -33,6 +33,7 @@ urlpatterns = [
     path('subs/', v_subs.home, name='subs'),
     path('unsubscribe/<int:id>', v_subs.unsubscribe),
 
+    path('posts/', v_rev.posts, name='posts'),
     path('ticket/create/', v_rev.ticket_create, name='create_ticket'),
     path('ticket/modify/<int:id>', v_rev.ticket_modify, name='modify_ticket'),
     path('review/create/', v_rev.review_create, name='create_review'),
@@ -41,9 +42,3 @@ urlpatterns = [
     path('', v_rev.feed, name="feed"),
 
 ]
-
-if settings.DEBUG:
-    import debug_toolbar
-    urlpatterns = [
-        path('__debug__/', include(debug_toolbar.urls)),
-    ] + urlpatterns
