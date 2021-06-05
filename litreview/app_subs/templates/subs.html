@@ -1,36 +1,41 @@
-<h2>Subs page</h2>
-
-<form method="POST" class="post-form" enctype="multipart/form-data">{% csrf_token %}
-    {{ form.as_p }}
-    {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-    <button type="submit" class="save btn btn-default">Envoyer</button>
-</form>
-
-<h3>Abonnement</h3>
-{% for f in following %}
-
-    <p> {{f}} </p>
-    <a href="/unsubscribe/{{ f.id }}">Supprimer</a>
-
-{% empty %}
-    <p>Vous n'êtes abonné à aucun utilisateur.</p>
-
-{% endfor %}
+{% extends 'layouts/base.html' %}
 
 
-<h3>Abonnés</h3>
-{% for f in followers %}
+{% block content %}
+    <h2>Subs page</h2>
 
-    <p> {{f}} </p>
+    <form method="POST" class="post-form" enctype="multipart/form-data">{% csrf_token %}
+        {{ form.as_p }}
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <button type="submit" class="save btn btn-default">Envoyer</button>
+    </form>
 
-{% empty %}
-    <p>Aucun utilisateur n'est abonné à vous.</p>
+    <h3>Abonnement</h3>
+    {% for f in following %}
 
-{% endfor %}
+        <p> {{f}} </p>
+        <a href="/unsubscribe/{{ f.id }}">Supprimer</a>
 
+    {% empty %}
+        <p>Vous n'êtes abonné à aucun utilisateur.</p>
+
+    {% endfor %}
+
+
+    <h3>Abonnés</h3>
+    {% for f in followers %}
+
+        <p> {{f}} </p>
+
+    {% empty %}
+        <p>Aucun utilisateur n'est abonné à vous.</p>
+
+    {% endfor %}
+
+{%endblock content%}

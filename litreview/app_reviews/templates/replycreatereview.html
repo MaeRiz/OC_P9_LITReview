@@ -1,3 +1,7 @@
+{% extends 'layouts/base.html' %}
+
+
+{% block content %}
 <h2>Critique réponse</h2>
 
 <p>Réponse au ticket #{{ infos_ticket.id }} {{ infos_ticket.title }}</p>
@@ -7,3 +11,4 @@
     {{ form_review.as_p }}
     <button type="submit" class="save btn btn-default">Envoyer</button>
 </form>
+{%endblock%}

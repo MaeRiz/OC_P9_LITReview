@@ -1,3 +1,8 @@
+{% extends 'layouts/base.html' %}
+
+
+{% block content %}
+
 <h1>Modify ticket</h1>
 
 <p>Modification du ticket #{{ ticket_infos.id }} {{ ticket_infos.title }}</p>
@@ -7,3 +12,5 @@
     {{ form.as_p }}
     <button type="submit" class="save btn btn-default">Envoyer</button>
 </form>
+
+{% endblock %}

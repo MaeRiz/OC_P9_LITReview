@@ -1,0 +1,108 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: rgb(236, 236, 236);
+    color: rgb(0, 0, 0);
+    margin: 1;
+}
+
+/* Navigation */
+
+nav ul
+{
+    list-style-type: none;
+    display: flex;    
+}
+
+nav li
+{
+    margin-right: 15px;
+}
+
+nav a
+{
+    font-size: 1.5vw;
+    color: rgb(0, 0, 0);
+    padding-bottom: 3px;
+    text-decoration: none;
+}
+
+header {
+
+    display: inline-flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgb(180, 180, 180);
+    border: solid;
+    border-radius: 5px;
+    height: 6vw;
+}
+
+
+
+header h1 a{
+    margin-left: 25px;
+    font-size: 3vw;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+}
+
+.content {
+  text-align: center;
+}
+
+/* Articles */
+
+article {
+
+    border: solid;
+    border-radius: 5px;
+    margin: 2% 10% 1% 10%;
+}
+
+article.btn {
+    text-align: right;
+}
+
+/* Bottuns */
+
+.btn {
+    transition-duration: 0.4s;
+    background-color: rgb(255, 255, 255);
+    border: solid black;
+    border-radius: 10px;
+    color: rgb(0, 0, 0);
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-bottom: 1%;
+    font-weight: bold;
+  }
+  
+.btn:hover {
+    background-color: rgb(211, 211, 211);
+    cursor: pointer;
+}
+
+.btn.delete {
+    border: solid rgb(153, 0, 0);
+    background-color: rgb(255, 239, 239);
+  }
+
+.btn.modify {
+    border: solid rgb(4, 114, 0);
+    background-color: rgb(231, 255, 232);
+  }
+
+.btn.delete:hover {
+    background-color: rgb(255, 113, 113);
+    border: solid rgb(153, 0, 0);
+  }
+
+.btn.modify:hover {
+    background-color: rgb(119, 255, 115);
+    border: solid rgb(4, 114, 0);
+  }
+
