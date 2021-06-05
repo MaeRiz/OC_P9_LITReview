@@ -1,10 +1,12 @@
 from django.shortcuts import redirect, render
 from itertools import chain
 from django.db.models import Value, CharField
+from django.contrib.auth.models import User
 
 from .forms import RawCreateReviewForm, RawCreateTicketForm
 from .models import Review, Ticket
-from .getposts import get_reviews_for_feed, get_tickets_for_feed
+from .getposts import get_reviews_for_feed, get_tickets_for_feed, check_tickets_reply
+
 
 # Create your views here.
 def ticket_create(request):
@@ -66,6 +68,18 @@ def ticket_modify(request, id):
         else:
             return redirect('/')
 
+def ticket_delete(request, id):
+    if request.user.is_authenticated == False:
+        return redirect('login')
+    else:
+        ticket_delete = Ticket.objects.get(pk=id)
+
+        if ticket_delete.user_id == request.user.id:
+            Ticket.objects.filter(pk=id).delete()
+            return redirect('posts')
+
+        else:
+            return redirect('/')
 
 def review_create(request):
 
@@ -107,7 +121,6 @@ def review_create_reply(request, id):
     if request.user.is_authenticated == False:
         return redirect('login')
     else:
-        print(len(Review.objects.filter(ticket_id=id).filter(user_id=request.user.id)))
         if len(Review.objects.filter(ticket_id=id).filter(user_id=request.user.id)) >= 1:
 
             return redirect('/')
@@ -134,6 +147,7 @@ def review_create_reply(request, id):
             context = {
                 'form_review': form_review,
                 'infos_ticket': old_ticket,
+                'ticket': Ticket.objects.get(id=id),
             }
             return render(request, 'replycreatereview.html', context)
 
@@ -165,11 +179,24 @@ def review_modify(request, id):
             context = {
                 'form': form,
                 'review_infos': review_modify,
+                'ticket': Ticket.objects.get(id=review_modify.ticket_id),
             }
             return render(request, 'modifyreview.html', context)
         else:
             return redirect('/')
 
+def review_delete(request, id):
+    if request.user.is_authenticated == False:
+        return redirect('login')
+    else:
+        review_delete = Review.objects.get(pk=id)
+
+        if review_delete.user_id == request.user.id:
+            Review.objects.filter(pk=id).delete()
+            return redirect('posts')
+
+        else:
+            return redirect('/')
 
 def posts(request):
 
@@ -178,10 +205,10 @@ def posts(request):
     else:
 
         reviews = Review.objects.filter(user_id=request.user.id)  
-        reviews = reviews.annotate(content_type=Value('REVIEW', CharField()))
+        reviews = reviews.annotate(content_type=Value('review', CharField()))
 
         tickets = Ticket.objects.filter(user_id=request.user.id) 
-        tickets = tickets.annotate(content_type=Value('TICKET', CharField()))
+        tickets = tickets.annotate(content_type=Value('ticket', CharField()))
 
         posts = sorted(
             chain(reviews, tickets), 
@@ -196,6 +223,7 @@ def posts(request):
         context = {
             'posts': posts,
             'ticket_list_for_review': ticket_list_for_review,
+            'users': User.objects.all(),
         }
 
         return render(request, 'posts.html', context)
@@ -227,6 +255,8 @@ def feed(request):
         context = {
             'posts': posts,
             'ticket_list_for_review': ticket_list_for_review,
+            'users': User.objects.all(),
+            'ticket_id_reply': check_tickets_reply(request.user.id, tickets),
         }
 
         return render(request, 'feed.html', context)

@@ -2,7 +2,8 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     background-color: rgb(236, 236, 236);
     color: rgb(0, 0, 0);
-    margin: 1;
+    margin: 0;
+    overflow-x: hidden;
 }
 
 /* Navigation */
@@ -26,16 +27,19 @@ nav a
     text-decoration: none;
 }
 
+nav a:hover {
+    color: rgb(128, 128, 128);
+}
+
 header {
 
     display: inline-flex;
     width: 100%;
     align-items: center;
     justify-content: space-between;
-    background-color: rgb(180, 180, 180);
-    border: solid;
-    border-radius: 5px;
-    height: 6vw;
+    background-color: rgb(255, 255, 255);
+    border: solid rgb(196, 196, 196);
+    height: 5vw;
 }
 
 
@@ -55,7 +59,8 @@ header h1 a{
 
 article {
 
-    border: solid;
+    background-color: rgb(247, 247, 247);
+    border: solid rgb(196, 196, 196);
     border-radius: 5px;
     margin: 2% 10% 1% 10%;
 }
@@ -63,11 +68,19 @@ article {
 article.btn {
     text-align: right;
 }
+.review {
+    border-color: rgb(255, 207, 103);
+    background-color: rgb(255, 248, 233);
+}
 
+.ticket {
+    border-color: rgb(96, 218, 255);
+    background-color: rgb(228, 247, 253);
+}
 /* Bottuns */
 
 .btn {
-    transition-duration: 0.4s;
+    transition-duration: 0.2s;
     background-color: rgb(255, 255, 255);
     border: solid black;
     border-radius: 10px;
@@ -106,3 +119,6 @@ article.btn {
     border: solid rgb(4, 114, 0);
   }
 
+.btn.feed {
+    width: 12%;
+}

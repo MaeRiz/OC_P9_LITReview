@@ -26,3 +26,12 @@ def get_tickets_for_feed(userid):
     for follower in followers:
         followers_ids.append(follower.followed_user_id)
     return (Ticket.objects.filter(user_id__in=followers_ids))
+
+
+def check_tickets_reply(userid, tickets_feed):
+    reviews = Review.objects.filter(user_id=userid)
+    tickets_reply_id = []
+    for review in reviews:
+        tickets_reply_id.append(review.ticket_id)
+    return (tickets_reply_id)
+    

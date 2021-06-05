@@ -1,7 +1,28 @@
 {% block content %}
+    <article class="ticket">
 
-<h3> Ticket: {{ post.title }} </h3>
-<p>Date: {{ post.time_created }} </p>
-<p> {{ post.description }} </p>
+        <h3> Ticket: {{ post.title }} </h3>
+        {% for user in users %}
+            {% if user.id == post.user_id %}
+                <p>Par: {{ user }}</p>
+            {% endif %}
+        {% endfor %}
+        <p>Date: {{ post.time_created }} </p>
+        <p> {{ post.description }} </p>
 
+        {% if user.id == post.user_id %}
+            <a class="btn modify" href="/ticket/modify/{{ post.id }}">Modifier</a>
+            <a class="btn delete" href="/ticket/delete/{{ post.id }}">Supprimer</a>
+        {% else %}
+
+            {% if post.id in ticket_id_reply %}
+                <a class="btn ">Déjà répondu</a>
+
+            {% else %}
+                <a class="btn" href="/review/create/{{ post.id }}">Répondre</a>
+            {% endif %}
+        {% endif %}
+
+
+    </article>
 {% endblock %}

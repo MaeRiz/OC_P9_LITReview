@@ -1,7 +1,14 @@
 {% block content %}
+    <article class="ticket">
 
-<h3> Ticket: {{ ticket.title }} </h3>
-<p>Date: {{ ticket.time_created }} </p>
-<p> {{ ticket.description }} </p>
+        <h3> Ticket: {{ ticket.title }} </h3>
+        {% for user in users %}
+            {% if user.id == post.user_id %}
+                <p>Par: {{ user }}</p>
+            {% endif %}
+        {% endfor %}
+        <p>Date: {{ ticket.time_created }} </p>
+        <p> {{ ticket.description }} </p>
+    </article>
 
 {% endblock %}

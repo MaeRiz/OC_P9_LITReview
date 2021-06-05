@@ -6,15 +6,19 @@
 
     
     {% for post in posts %}
-        <article>
-        {% if post.content_type == 'TICKET' %}
-            {% include 'snippets/ticket_snippet.html' %}
-        {% elif post.content_type == 'REVIEW' %}
-            {% include 'snippets/review_snippet.html' %}
+
+        {% if post.content_type == 'ticket' %}
+                {% include 'snippets/ticket_snippet.html' %}
+        {% elif post.content_type == 'review' %}
+                {% include 'snippets/review_snippet.html' %}
         {% endif %}
-            <a class="btn modify" href="/ticket/modify/{{ post.id }}">Modifier</a>
-            <a class="btn delete" href="/ticket/delete/{{ post.id }}">Supprimer</a>
-        </article>
+
+        
+        {% empty %}
+            <article>
+                <p>Il n'y a aucun ticket ou aucune review à afficher ici !</p>
+                <p>Commencez par suivre des personnes ou créer un ticket ou une critique.</p>
+            </article>
     {% endfor %}
 
 

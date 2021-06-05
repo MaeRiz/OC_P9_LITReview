@@ -4,19 +4,23 @@
 {% block content %}
 
 
-    <h2>Flux</h2>
+    <h2>Feed</h2>
 
-    <a class="btn" href="/ticket/create/">Demander une critique</a>
-    <a class="btn" href="/review/create/">Créer une critique</a>
+    <a class="btn feed" href="/ticket/create/">Demander une critique</a>
+    <a class="btn feed" href="/review/create/">Créer une critique</a>
 
     {% for post in posts %}
-        <article>
         {% if post.content_type == 'TICKET' %}
             {% include 'snippets/ticket_snippet.html' %}
         {% elif post.content_type == 'REVIEW' %}
             {% include 'snippets/review_snippet.html' %}
         {% endif %}
-        </article>
+
+        {% empty %}
+            <article>
+                <p>Il n'y a aucun ticket ou aucune review à afficher ici !</p>
+                <p>Commencez par suivre des personnes ou créer un ticket ou une critique.</p>
+            </article>
     {% endfor %}
     
 {% endblock %}
