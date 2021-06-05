@@ -1,0 +1,22 @@
+{% extends 'layouts/base.html' %}
+
+
+{% block content %}
+
+
+    <h2>Flux</h2>
+
+    <a class="btn" href="/ticket/create/">Demander une critique</a>
+    <a class="btn" href="/review/create/">Créer une critique</a>
+
+    {% for post in posts %}
+        <article>
+        {% if post.content_type == 'TICKET' %}
+            {% include 'snippets/ticket_snippet.html' %}
+        {% elif post.content_type == 'REVIEW' %}
+            {% include 'snippets/review_snippet.html' %}
+        {% endif %}
+        </article>
+    {% endfor %}
+    
+{% endblock %}

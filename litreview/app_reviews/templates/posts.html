@@ -1,0 +1,21 @@
+{% extends 'layouts/base.html' %}
+{% block content %}
+
+
+    <h2>Vos posts</h2>
+
+    
+    {% for post in posts %}
+        <article>
+        {% if post.content_type == 'TICKET' %}
+            {% include 'snippets/ticket_snippet.html' %}
+        {% elif post.content_type == 'REVIEW' %}
+            {% include 'snippets/review_snippet.html' %}
+        {% endif %}
+            <a class="btn modify" href="/ticket/modify/{{ post.id }}">Modifier</a>
+            <a class="btn delete" href="/ticket/delete/{{ post.id }}">Supprimer</a>
+        </article>
+    {% endfor %}
+
+
+{% endblock %}

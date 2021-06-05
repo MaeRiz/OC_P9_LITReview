@@ -1,7 +1,10 @@
 from django.shortcuts import redirect, render
+from itertools import chain
+from django.db.models import Value, CharField
 
 from .forms import RawCreateReviewForm, RawCreateTicketForm
 from .models import Review, Ticket
+from .getposts import get_reviews_for_feed, get_tickets_for_feed
 
 # Create your views here.
 def ticket_create(request):
@@ -173,17 +176,57 @@ def posts(request):
     if request.user.is_authenticated == False:
         return redirect('login')
     else:
-        return render(request, 'posts.html')
+
+        reviews = Review.objects.filter(user_id=request.user.id)  
+        reviews = reviews.annotate(content_type=Value('REVIEW', CharField()))
+
+        tickets = Ticket.objects.filter(user_id=request.user.id) 
+        tickets = tickets.annotate(content_type=Value('TICKET', CharField()))
+
+        posts = sorted(
+            chain(reviews, tickets), 
+            key=lambda post: post.time_created, 
+            reverse=True
+        )
+
+        ticket_list_for_review = []
+        for review in reviews:
+            ticket_list_for_review.append(Ticket.objects.get(id=review.ticket_id))
+
+        context = {
+            'posts': posts,
+            'ticket_list_for_review': ticket_list_for_review,
+        }
+
+        return render(request, 'posts.html', context)
 
 def feed(request):
     
     if request.user.is_authenticated == False:
         return redirect('login')
     else:
-        tickets = [
-            {'id': 1, 'title': 'Titre du livre 1', 'body': 'Description 1'},
-            {'id': 2, 'title': 'Titre du livre 2', 'body': 'Description 2'},
-            {'id': 3, 'title': 'Titre du livre 3', 'body': 'Description 3'},
-        ]
 
-        return render(request, 'flux.html', {'tickets': tickets})
+        reviews = get_reviews_for_feed(request.user)
+        reviews = reviews.annotate(content_type=Value('REVIEW', CharField()))
+
+        tickets = get_tickets_for_feed(request.user) 
+        tickets = tickets.annotate(content_type=Value('TICKET', CharField()))
+
+        posts = sorted(
+            chain(reviews, tickets), 
+            key=lambda post: post.time_created, 
+            reverse=True
+        )
+
+        tlfr = []
+        for review in reviews:
+            tlfr.append(review.ticket_id)
+
+        ticket_list_for_review= Ticket.objects.filter(id__in=tlfr)
+
+        context = {
+            'posts': posts,
+            'ticket_list_for_review': ticket_list_for_review,
+        }
+
+        return render(request, 'feed.html', context)

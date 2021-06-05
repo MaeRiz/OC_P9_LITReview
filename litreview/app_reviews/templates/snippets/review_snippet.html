@@ -1,0 +1,19 @@
+{% block content %}
+
+
+
+    <h3> Review: {{ post.headline }} </h3>
+    <p>Date: {{ post.time_created }} </p>
+    <p> {{ post.body }} </p>
+
+    {% for ticket in ticket_list_for_review %}
+
+        {% if ticket.id == post.ticket_id %}
+            <article>
+            {% include 'snippets/ticket_snippet_forreview.html' %}
+            </article>
+        {% endif %}
+
+    {% endfor %}
+
+{% endblock %}
