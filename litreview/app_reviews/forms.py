@@ -1,8 +1,6 @@
 from django import forms
 
 
-RATING_CHOISES = ['1', '2', '3', '4', '5']
-
 class RawCreateTicketForm(forms.Form):
     title = forms.CharField(
         required=True,

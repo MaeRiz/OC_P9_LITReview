@@ -46,11 +46,12 @@ def ticket_modify(request, id):
             if request.method == 'POST':
                 form = RawCreateTicketForm(request.POST, request.FILES)
                 if form.is_valid:
-                    Ticket.objects.filter(pk=id).update(
-                        title= request.POST['title'],
-                        description= request.POST['description'],
-                        image= request.FILES.get('image', ticket_modify.image)
-                    )
+                    ticket_modify.title = request.POST['title']
+                    ticket_modify.description = request.POST['description']
+
+                    ticket_modify.image = request.FILES.get('image', ticket_modify.image)
+      
+                    ticket_modify.save()
                     return redirect('/')
             else:
                 form = RawCreateTicketForm()
