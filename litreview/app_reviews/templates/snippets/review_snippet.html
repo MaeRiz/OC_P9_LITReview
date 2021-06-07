@@ -2,14 +2,15 @@
     <article class="review">
 
 
-        <h3> Review: {{ post.headline }} </h3>
+        
         {% for user in users %}
             {% if user.id == post.user_id %}
-                <p>Par: {{ user }}</p>
+                <p class="user">Critique - {{ user }}</p>
             {% endif %}
         {% endfor %}
-        <p>Date: {{ post.time_created }} </p>
-        <p> {{ post.body }} </p>
+        <p class="date">{{ post.time_created }} </p>
+        <h3 class="title">{{ post.headline }} - {{post.rating}}⭐</h3>
+        <p class="body"> {{ post.body }} </p>
 
         {% for ticket in ticket_list_for_review %}
 

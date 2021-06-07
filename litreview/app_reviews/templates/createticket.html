@@ -2,10 +2,11 @@
 
 
 {% block content %}
-<h1>Create ticket</h1>
-
-<form method="POST" class="post-form" enctype="multipart/form-data">{% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="save btn btn-default">Save</button>
-</form>
+<h2>Faire une demande</h2>
+<article class="ticket">
+    <form method="POST" class="post-form" enctype="multipart/form-data">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Créer</button>
+    </form>
+</article>
 {%endblock%}

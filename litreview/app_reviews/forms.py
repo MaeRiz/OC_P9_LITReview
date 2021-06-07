@@ -9,7 +9,7 @@ class RawCreateTicketForm(forms.Form):
         label='Titre',
         widget=forms.TextInput(
             attrs={
-                "placeholder": "Titre"
+                "placeholder": "Titre du livre"
             },
         ),
     )
@@ -18,7 +18,7 @@ class RawCreateTicketForm(forms.Form):
         label='Description',
         widget=forms.Textarea(
             attrs={
-                "placeholder": "Description",
+                "placeholder": "Description de la demande",
             },
         ),
     )
@@ -34,21 +34,23 @@ class RawCreateReviewForm(forms.Form):
         label='Titre',
         widget=forms.TextInput(
             attrs={
-                "placeholder": "Titre"
-            },
-        ),
-    )
-    body = forms.CharField(
-        required=True,
-        label='Description',
-        widget=forms.Textarea(
-            attrs={
-                "placeholder": "Description",
+                "placeholder": "Titre de la critique"
             },
         ),
     )
     rating = forms.MultipleChoiceField(
         required=True,
+        label='Note',
         widget=forms.RadioSelect,
         choices=CHOICES,
+    )
+
+    body = forms.CharField(
+        required=True,
+        label='Description',
+        widget=forms.Textarea(
+            attrs={
+                "placeholder": "Description de la critique",
+            },
+        ),
     )

@@ -3,7 +3,7 @@
 
 {% block content %}
   
-  <h2>Sign up</h2>
+  <h2>S'inscrire</h2>
   <form method="post">
     {% csrf_token %}
     {% for field in form %}
@@ -15,8 +15,7 @@
         {% endfor %}
       </p>
     {% endfor %}
-    <button class="btn" type="submit">S'enregsitrer</button>
-    <a href="{% url 'login' %}"><button class="btn" type="button">Se connecter</button></a>
+    <button class="btn" type="submit">Inscription</button>
   </form>
 
 {% endblock %}

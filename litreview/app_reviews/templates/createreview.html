@@ -2,11 +2,15 @@
 
 
 {% block content %}
-<h1>Create review</h1>
 
-<form method="POST" class="post-form" enctype="multipart/form-data">{% csrf_token %}
-    {{ form_ticket.as_p }}
-    {{ form_review.as_p }}
-    <button type="submit" class="save btn btn-default">Envoyer</button>
-</form>
+<h2>Créer une critique</h2>
+
+<article class="review">
+
+    <form method="POST" class="post-form" enctype="multipart/form-data">{% csrf_token %}
+        {{ form_ticket.as_p }}
+        {{ form_review.as_p }}
+        <button type="submit" class="save btn btn-default">Créer</button>
+    </form>
+</article>
 {%endblock%}

@@ -5,7 +5,9 @@ body {
     margin: 0;
     overflow-x: hidden;
 }
-
+h2 {
+    font-size: 2vw;
+}
 /* Navigation */
 
 nav ul
@@ -63,19 +65,31 @@ article {
     border: solid rgb(196, 196, 196);
     border-radius: 5px;
     margin: 2% 10% 1% 10%;
+    padding-bottom: 1%;
+    color: rgb(0, 0, 0);
 }
 
-article.btn {
-    text-align: right;
+
+
+article .user {
+    float: left;
+    margin-left: 15px;
+    color: rgb(87, 87, 87);
 }
+
+article .date {
+    float: right;
+    margin-right: 15px;
+    color: rgb(87, 87, 87);
+
+}
+
 .review {
-    border-color: rgb(255, 207, 103);
-    background-color: rgb(255, 248, 233);
+    background-color: #B69BDA;
 }
 
 .ticket {
-    border-color: rgb(96, 218, 255);
-    background-color: rgb(228, 247, 253);
+    background-color: #7674E2;
 }
 /* Bottuns */
 
@@ -121,4 +135,95 @@ article.btn {
 
 .btn.feed {
     width: 12%;
+}
+
+.table {
+    margin: auto;
+    table-layout: auto;
+    width: 20%;
+  }
+
+.table .btn {
+    font-size: 1vw;
+    padding: 5%;
+}
+
+.table tr {
+    font-size: 1.5vw;
+}
+
+
+input {
+    margin: 8px 0;
+    box-sizing: border-box;
+  }
+
+input:focus {
+    border: 1px  #555;
+  }
+
+input[type=text], input[type=password], textarea {
+    width: 60%;
+    height: 150px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    resize: none;
+  }
+
+input[type=text], input[type=password] {
+    height: 50px;
+    margin: 8px 0;
+    box-sizing: border-box;
+  }
+
+
+label {
+    display: block;
+    width: 10em;
+    margin-right: 1em;
+    }
+
+form {
+    margin-left: 28%;
+    text-align: start;
+}
+
+
+form ul
+{
+    list-style-type: none;
+    display: flex;    
+}
+
+form li
+{
+    margin-right: -10%;
+}
+
+div .ticket-content {
+    padding: 3% 25% 3% 25%;
+    text-align: end;
+}
+
+.ticket-content img {
+    width: 30%;
+    border-radius: 10px;
+    border: rgb(0, 0, 0) solid;
+}
+
+.ticket-text {
+    position: absolute;
+    text-align: start;
+    padding-right: 45%;
+}
+
+article .body {
+    font-size: 1.1vw;
+}
+
+article .title {
+    font-size: 1.3vw;
 }

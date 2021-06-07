@@ -2,7 +2,7 @@
 
 
 {% block content %}
-    <h2>Subs page</h2>
+    <h2>Abonnements</h2>
 
     <form method="POST" class="post-form" enctype="multipart/form-data">{% csrf_token %}
         {{ form.as_p }}
@@ -13,29 +13,38 @@
                 {% endfor %}
             </ul>
         {% endif %}
-        <button type="submit" class="save btn btn-default">Envoyer</button>
+        <button type="submit" class="save btn btn-default">S'abonner</button>
     </form>
+    <article>
+        <h2>Abonnements</h2>
+        <table class="table">
+        {% for f in following %}
+            <tr>
+                <td> {{f}} </td>
+                <td><a class="btn delete" href="/unsubscribe/{{ f.id }}">Supprimer</a></td>
+            </tr>
 
-    <h3>Abonnement</h3>
-    {% for f in following %}
+        {% empty %}
+            <p>Vous n'êtes abonné à aucun utilisateur.</p>
 
-        <p> {{f}} </p>
-        <a href="/unsubscribe/{{ f.id }}">Supprimer</a>
+        {% endfor %}
+        </table>
+    </article>
+    
 
-    {% empty %}
-        <p>Vous n'êtes abonné à aucun utilisateur.</p>
+    <article>
+        <h2>Abonnés</h2>
+        <table class="table">
+        {% for f in followers %}
+            <tr>
+                <td> {{f}} </td>
+            </tr>
+        {% empty %}
+            <p>Aucun utilisateur n'est abonné à vous.</p>
 
-    {% endfor %}
-
-
-    <h3>Abonnés</h3>
-    {% for f in followers %}
-
-        <p> {{f}} </p>
-
-    {% empty %}
-        <p>Aucun utilisateur n'est abonné à vous.</p>
-
-    {% endfor %}
+        {% endfor %}
+        </table>
+    </article>
+    
 
 {%endblock content%}
