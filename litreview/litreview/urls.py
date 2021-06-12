@@ -17,17 +17,20 @@ from django.contrib import admin
 from django.conf import settings
 from django.urls import path
 from django.conf.urls.static import static
+from django.contrib.auth.views import LoginView
 
-from . import views
 from app_accounts import views as v_acc
 from app_reviews import views as v_rev
 from app_subs import views as v_subs
-from django.contrib.auth.views import LoginView, LogoutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('login/', LoginView.as_view(template_name='login.html', redirect_authenticated_user = True), name='login'),
+    path('login/', LoginView.as_view(
+        template_name='login.html',
+        redirect_authenticated_user=True),
+        name='login',
+    ),
     path('register/', v_acc.register, name='register'),
     path('logout/', v_acc.disconnect, name='logout'),
 

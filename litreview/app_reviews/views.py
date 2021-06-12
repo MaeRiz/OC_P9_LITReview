@@ -5,23 +5,23 @@ from django.contrib.auth.models import User
 
 from .forms import RawCreateReviewForm, RawCreateTicketForm
 from .models import Review, Ticket
-from .getposts import get_reviews_for_feed, get_tickets_for_feed, check_tickets_reply
+from .getposts import get_reviews_for_feed, get_tickets_for_feed
+from .getposts import check_tickets_reply
 
 
-# Create your views here.
 def ticket_create(request):
 
-    if request.user.is_authenticated == False:
+    if request.user.is_authenticated is False:
         return redirect('login')
     else:
         if request.method == 'POST':
             form = RawCreateTicketForm(request.POST, request.FILES)
             if form.is_valid:
                 Ticket.objects.create(
-                    title= request.POST['title'],
-                    description= request.POST['description'],
-                    user= request.user,
-                    image= request.FILES.get('image', 'image/upload/NULL.jpg')
+                    title=request.POST['title'],
+                    description=request.POST['description'],
+                    user=request.user,
+                    image=request.FILES.get('image', 'image/upload/NULL.jpg')
                 )
                 return redirect('/')
         else:
@@ -33,10 +33,9 @@ def ticket_create(request):
         return render(request, 'createticket.html', context)
 
 
-
 def ticket_modify(request, id):
 
-    if request.user.is_authenticated == False:
+    if request.user.is_authenticated is False:
         return redirect('login')
     else:
 
@@ -49,8 +48,9 @@ def ticket_modify(request, id):
                     ticket_modify.title = request.POST['title']
                     ticket_modify.description = request.POST['description']
 
-                    ticket_modify.image = request.FILES.get('image', ticket_modify.image)
-      
+                    ticket_modify.image = request.FILES.get(
+                                            'image', ticket_modify.image)
+
                     ticket_modify.save()
                     return redirect('/')
             else:
@@ -69,8 +69,9 @@ def ticket_modify(request, id):
         else:
             return redirect('/')
 
+
 def ticket_delete(request, id):
-    if request.user.is_authenticated == False:
+    if request.user.is_authenticated is False:
         return redirect('login')
     else:
         ticket_delete = Ticket.objects.get(pk=id)
@@ -82,9 +83,10 @@ def ticket_delete(request, id):
         else:
             return redirect('/')
 
+
 def review_create(request):
 
-    if request.user.is_authenticated == False:
+    if request.user.is_authenticated is False:
         return redirect('login')
     else:
         if request.method == 'POST':
@@ -92,17 +94,17 @@ def review_create(request):
             form_ticket = RawCreateTicketForm(request.POST, request.FILES)
             if form_review.is_valid and form_ticket.is_valid:
                 new_ticket = Ticket.objects.create(
-                    title= request.POST['title'],
-                    description= request.POST['description'],
-                    user= request.user,
-                    image= request.FILES.get('image', 'image/upload/NULL.jpg')
+                    title=request.POST['title'],
+                    description=request.POST['description'],
+                    user=request.user,
+                    image=request.FILES.get('image', 'image/upload/NULL.jpg')
                 )
                 Review.objects.create(
-                    headline= request.POST['headline'],
-                    body= request.POST['body'],
-                    user= request.user,
-                    ticket= new_ticket,
-                    rating= request.POST['rating'],
+                    headline=request.POST['headline'],
+                    body=request.POST['body'],
+                    user=request.user,
+                    ticket=new_ticket,
+                    rating=request.POST['rating'],
                 )
             return redirect('/')
 
@@ -117,12 +119,15 @@ def review_create(request):
 
         return render(request, 'createreview.html', context)
 
+
 def review_create_reply(request, id):
 
-    if request.user.is_authenticated == False:
+    if request.user.is_authenticated is False:
         return redirect('login')
     else:
-        if len(Review.objects.filter(ticket_id=id).filter(user_id=request.user.id)) >= 1:
+        if len(Review.objects.filter(
+            ticket_id=id
+        ).filter(user_id=request.user.id)) >= 1:
 
             return redirect('/')
 
@@ -135,11 +140,11 @@ def review_create_reply(request, id):
                 form_ticket = RawCreateTicketForm(request.POST, request.FILES)
                 if form_review.is_valid and form_ticket.is_valid:
                     Review.objects.create(
-                        headline= request.POST['headline'],
-                        body= request.POST['body'],
-                        user= request.user,
-                        ticket= old_ticket,
-                        rating= request.POST['rating'],
+                        headline=request.POST['headline'],
+                        body=request.POST['body'],
+                        user=request.user,
+                        ticket=old_ticket,
+                        rating=request.POST['rating'],
                     )
                 return redirect('/')
             else:
@@ -155,7 +160,7 @@ def review_create_reply(request, id):
 
 def review_modify(request, id):
 
-    if request.user.is_authenticated == False:
+    if request.user.is_authenticated is False:
         return redirect('login')
     else:
         review_modify = Review.objects.get(pk=id)
@@ -165,9 +170,9 @@ def review_modify(request, id):
                 form = RawCreateReviewForm(request.POST)
                 if form.is_valid:
                     Review.objects.filter(pk=id).update(
-                        headline= request.POST['headline'],
-                        body= request.POST['body'],
-                        rating= request.POST['rating'],
+                        headline=request.POST['headline'],
+                        body=request.POST['body'],
+                        rating=request.POST['rating'],
                     )
                     return redirect('/')
             else:
@@ -186,8 +191,9 @@ def review_modify(request, id):
         else:
             return redirect('/')
 
+
 def review_delete(request, id):
-    if request.user.is_authenticated == False:
+    if request.user.is_authenticated is False:
         return redirect('login')
     else:
         review_delete = Review.objects.get(pk=id)
@@ -199,27 +205,29 @@ def review_delete(request, id):
         else:
             return redirect('/')
 
+
 def posts(request):
 
-    if request.user.is_authenticated == False:
+    if request.user.is_authenticated is False:
         return redirect('login')
     else:
 
-        reviews = Review.objects.filter(user_id=request.user.id)  
+        reviews = Review.objects.filter(user_id=request.user.id)
         reviews = reviews.annotate(content_type=Value('review', CharField()))
 
-        tickets = Ticket.objects.filter(user_id=request.user.id) 
+        tickets = Ticket.objects.filter(user_id=request.user.id)
         tickets = tickets.annotate(content_type=Value('ticket', CharField()))
 
         posts = sorted(
-            chain(reviews, tickets), 
-            key=lambda post: post.time_created, 
+            chain(reviews, tickets),
+            key=lambda post: post.time_created,
             reverse=True
         )
 
         ticket_list_for_review = []
         for review in reviews:
-            ticket_list_for_review.append(Ticket.objects.get(id=review.ticket_id))
+            ticket_list_for_review.append(
+                Ticket.objects.get(id=review.ticket_id))
 
         context = {
             'posts': posts,
@@ -229,21 +237,22 @@ def posts(request):
 
         return render(request, 'posts.html', context)
 
+
 def feed(request):
-    
-    if request.user.is_authenticated == False:
+
+    if request.user.is_authenticated is False:
         return redirect('login')
     else:
 
         reviews = get_reviews_for_feed(request.user)
         reviews = reviews.annotate(content_type=Value('REVIEW', CharField()))
 
-        tickets = get_tickets_for_feed(request.user) 
+        tickets = get_tickets_for_feed(request.user)
         tickets = tickets.annotate(content_type=Value('TICKET', CharField()))
 
         posts = sorted(
-            chain(reviews, tickets), 
-            key=lambda post: post.time_created, 
+            chain(reviews, tickets),
+            key=lambda post: post.time_created,
             reverse=True
         )
 
@@ -251,7 +260,7 @@ def feed(request):
         for review in reviews:
             tlfr.append(review.ticket_id)
 
-        ticket_list_for_review= Ticket.objects.filter(id__in=tlfr)
+        ticket_list_for_review = Ticket.objects.filter(id__in=tlfr)
 
         context = {
             'posts': posts,

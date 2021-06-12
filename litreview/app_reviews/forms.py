@@ -23,10 +23,10 @@ class RawCreateTicketForm(forms.Form):
     image = forms.ImageField(
         required=True,
     )
-    
+
 
 class RawCreateReviewForm(forms.Form):
-    CHOICES = (('1', '1'),('2', '2'),('3', '3'),('4', '4'),('5', '5'))
+    CHOICES = (('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5'))
     headline = forms.CharField(
         required=True,
         label='Titre',

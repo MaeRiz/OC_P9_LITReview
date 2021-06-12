@@ -1,8 +1,5 @@
-
-from django.db.models.fields import FloatField
 from .models import Review, Ticket
-from  app_subs.models import UserFollows
-from itertools import chain
+from app_subs.models import UserFollows
 
 
 def get_reviews_for_feed(userid):
@@ -39,4 +36,3 @@ def check_tickets_reply(userid, tickets_feed):
     for review in reviews:
         tickets_reply_id.append(review.ticket_id)
     return (tickets_reply_id)
-    

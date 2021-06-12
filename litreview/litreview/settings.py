@@ -139,5 +139,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = '/'
 
 
-MEDIA_ROOT =  BASE_DIR / 'images'
+MEDIA_ROOT = BASE_DIR / 'images'
 MEDIA_URL = 'images/'
